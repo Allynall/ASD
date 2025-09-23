@@ -42,6 +42,7 @@ public:
     TVector(); //!изменено
     TVector(size_t);
     TVector(const T*, size_t);
+    TVector(std::initializer_list<T>);
     TVector(const TVector<T>&);
 
     ~TVector();
@@ -160,7 +161,29 @@ TVector<T>::TVector(const T* arr, size_t size) {
         }
     }
 }
+template<class T>
+TVector<T>::TVector(std::initializer_list<T> data) {
+    _capacity = 0; //_capacity = (size / STEP_OF_CAPACITY + 1) * STEP_OF_CAPACITY;
+    _data = nullptr; //_data = new T[_capacity];
+    _size = data.size();
+    _deleted = 0;
+    _states = nullptr;
 
+    if (_size > 0) {
+        _capacity = (_size / STEP_OF_CAPACITY + 1) * STEP_OF_CAPACITY;
+        _data = new T[_capacity];
+        _states = new State[_capacity];
+        for (size_t i = 0; i < _capacity; ++i) {
+            _data[i] = *(data.begin()+i);
+        }
+        for (size_t i = 0; i < _size; i++) {
+            _states[i] = busy;
+        }
+        for (size_t i = _size; i < _capacity; i++) {
+            _states[i] = empty;
+        }
+    }
+}
 template<class T>
 TVector<T>::TVector(const TVector<T>& other) {
 
@@ -210,7 +233,12 @@ size_t TVector<T>::size() const noexcept { return _size; }
 
 template<class T>
 inline T& TVector<T>::front() noexcept {
-    return _data[0];
+    for (int i = 0; i < _capacity; i++) {
+        if (_states[i] == busy) {
+            return _data[i];
+        }
+    }
+    
 }
 
 template<class T>

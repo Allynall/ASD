@@ -3,29 +3,40 @@
 
 #define EPSILON 0.000001
 
-TEST(TestCircleLib, can_construct_true) {
+TEST(TestCircleLib, can_construct_default) {
+    // Act & Assert
+    Circle circle;
+    
+    // Assert
+    EXPECT_EQ(Point(0, 0), circle.get_point());
+    EXPECT_EQ(0, circle.get_radius());
+}
+
+TEST(TestCircleLib, can_create_with_init_construct) {
     // Act & Assert
     Point point(3, 4);
-    ASSERT_NO_THROW(Circle(point, 4));
+    Circle circle(point, 5);
+
+    // Assert
+    EXPECT_EQ(point, circle.get_point());
+    EXPECT_EQ(5, circle.get_radius());
 }
-TEST(TestCircleLib, can_construct_false) {
+TEST(TestCircleLib, throw_when_try_create_with_negative_radius) 
+{
     // Act & Assert
     Point point(3, 4);
     ASSERT_ANY_THROW(Circle(point, -4));
 }
-TEST(TestCircleLib, comparison_true) {
+TEST(TestCircleLib, can_compare_equals_objects_correctly) {
     // Arrange
     Point point_1(3, 4);
     Circle circle_1(point_1, 4);
-    // Act
-    bool actual_result = (circle_1 == circle_1);
 
-    // Assert
-    bool expected_result = true;
-    EXPECT_EQ(expected_result, actual_result);
+    // Act and Assert
+    EXPECT_TRUE(circle_1 == circle_1);
 }
 
-TEST(TestCircleLib, comparison_false) {
+TEST(TestCircleLib, can_compare_not_equals_objects_correctly) {
     // Arrange
     Point num_1(3, 4);
     Point num_2(5, 6);
@@ -33,9 +44,5 @@ TEST(TestCircleLib, comparison_false) {
     Circle circle_2(num_2, 7);
 
     // Act
-    bool actual_result = (circle_1 == circle_2);
-
-    // Assert
-    bool expected_result = false;
-    EXPECT_EQ(expected_result, actual_result);
+    EXPECT_FALSE(circle_1 == circle_2);
 }

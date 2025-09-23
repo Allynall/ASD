@@ -6,12 +6,11 @@ protected:
 	Point _point;
 	int _radius;
 public:
-	Circle() = default;
-	Circle(Point point, int radius);
+	Circle(Point point = 0, int radius = 0); // ++
 
 	Point get_point() const;
 	int get_radius() const;
 
 
-	bool operator == (const Circle&) const noexcept;
+	bool operator == (const Circle&) const noexcept; // ++
 };

@@ -1,6 +1,7 @@
 #include "Point.h"
 #include <cmath>
 
+
 Point::Point(int ox, int oy) {
 	_ox = ox;
 	_oy = oy;

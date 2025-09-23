@@ -5,8 +5,7 @@ protected:
 	int _ox;
 	int _oy;
 public:
-	Point() = default;
-	Point(int ox, int oy);
+	Point(int ox = 0, int oy = 0);
 	Point(const Point&);
 
 	int get_x() const;

@@ -2,7 +2,7 @@
 #include <stdexcept>
 
 Circle::Circle(Point point, int radius) {
-	if (radius <= 0) {
+	if (radius < 0) {
 		throw std::invalid_argument("The radius must be greater than zero");
 	}
 

@@ -5,8 +5,7 @@
 class Sphere : public Circle {
     Point3D _point3D;
 public:
-    Sphere() = default;
-    Sphere(Point3D point3D, int radius);
+    Sphere(Point3D point3D = 0, int radius = 0);
 
     Point3D get_point3D() const;
 
