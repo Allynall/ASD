@@ -734,6 +734,7 @@ T& TVector<T>::operator[](size_t pos) noexcept { //!!!добавлен noexcept
             busy_elems += 1;
         }
     }
+    _states[pos] = busy;
     return _data[pos];
 }
 

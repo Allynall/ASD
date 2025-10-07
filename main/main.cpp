@@ -247,15 +247,19 @@ Matrix<int> mult_matrix_with_matrix(size_t *M, size_t *N, Matrix<int>* matrix) {
 	size_t N_second;
 
 	matrix_size(&M_second, &N_second, 1);
-	while ((*M != N_second) || (*N != M_second)) {
+	while (*N != M_second) {
 		std::cout << "¬ведите второе слагаемое (вторую матрицу) " << std::endl;
 		std::cout << "–азмер второй матрицы должен быть N, M (M, N как у первой)" << std::endl;
 		matrix_size(&M_second, &N_second, 1);
 	}
+	*M = (*matrix).get_M();
+	*N = N_second;
+
 	Matrix<int> matrix_2(M_second, N_second);
 	matrix_2.input_matrix();
-	return (*matrix * matrix_2);
 
+	return (*matrix * matrix_2);
+	
 }
 
 Matrix<int> enter_matrix(size_t *M, size_t *N, int flag) {
@@ -271,16 +275,16 @@ void choose_main_menu(char *choice, size_t *M, size_t *N, Matrix<int>* matrix) {
 	if (*choice == '1') {
 	}
 	else if (*choice == '2') {
-		add_matrix(*M, *N, matrix);
+		*matrix = add_matrix(*M, *N, matrix);
 	}
 	else if (*choice == '3') {
-		sub_matrix(*M, *N, matrix);
+		*matrix = sub_matrix(*M, *N, matrix);
 	}
 	else if (*choice == '4') {
-		mult_matrix_with_number(matrix);
+		*matrix = mult_matrix_with_number(matrix);
 	}
 	else if (*choice == '5') {
-		mult_matrix_with_matrix(M, N, matrix);
+		*matrix = mult_matrix_with_matrix(M, N, matrix);
 	}
 }
 void choose_triangle_menu(char* choice, size_t* M, size_t* N, TriangleMatrix<int>* matrix) {

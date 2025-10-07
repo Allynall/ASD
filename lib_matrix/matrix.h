@@ -16,11 +16,11 @@ public:
 
 	Matrix<T> operator+(Matrix<T> other); //++
 	Matrix<T> operator-(Matrix<T> other); //++
-	Matrix<T> operator*(Matrix<T> matr);
-	MVector<T> operator*(MVector<T> vec);
+	Matrix<T> operator*(Matrix<T> matr); //++
+	MVector<T> operator*(MVector<T> vec); //++
 	Matrix<T> operator*(T val); //++
 
-	Matrix<T> transport();
+	void transport(); //++
 
 	void input_matrix(); //+
 	void print_matrix(); //+
@@ -38,7 +38,7 @@ Matrix<T>::Matrix(size_t M, size_t N) {
 	_M = M;
 	_N = N;
 	this->resize(_M);
-	for (size_t i = 0; i < _N; i++) {
+	for (size_t i = 0; i < _M; i++) {
 		(*this)[i].resize(_N);
 	}
 
@@ -87,9 +87,26 @@ Matrix<T> Matrix<T>::operator-(Matrix<T> other) {
 }
 
 template<typename T>
+MVector<T> Matrix<T>::operator*(MVector<T> vec) {
+	MVector<T> result(_M);
+	for (size_t i = 0; i < _M; i++) {
+		result[i] = ((*this)[i] * vec);
+	}
+	return result;
+}
+
+template<typename T>
 Matrix<T> Matrix<T>::operator*( Matrix<T> matr) {
-	std::cout << "*matr" << std::endl;
-	Matrix<T> result(_M, _N);
+	if ((*this).get_N() != matr.get_M()) {
+		throw std::invalid_argument("Написать ");
+	}
+	Matrix result(_M, matr.get_N());
+	matr.transport();
+	for (size_t i = 0; i < _M; i++) {
+		for (size_t j = 0; j < matr.get_M(); j++) {
+			result[i][j] = ((*this)[i] * matr[j]);
+		}
+	}
 	return result;
 }
 
@@ -102,8 +119,15 @@ Matrix<T> Matrix<T>::operator*(T val) {
 	return result;
 }
 template<typename T>
-Matrix<T> Matrix<T>::transport() {
+void Matrix<T>::transport() {
+	Matrix result(_N, _M);
+	for (size_t i = 0; i < _N; i++) {
+		for (size_t j = 0; j < _M; j++) {
+			result[i][j] = (*this)[j][i];
+		}
+	}
 
+	*this = result;
 }
 template<typename T>
 void Matrix<T>::input_matrix() {

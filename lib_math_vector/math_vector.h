@@ -98,7 +98,7 @@ T MVector<T>::operator*(const MVector<T>& other) {
 		throw std::invalid_argument("The dimensions of the vectors should be equal");
 	}
 	for (int i = 0; i < (*this)._capacity; i++)
-		if ((*this)._states[i] == busy) {
+		if (((*this)._states[i] == busy)) {
 			for (int j = i; j < other._capacity; j++)
 			{
 				if (other._states[j] == busy) {
