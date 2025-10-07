@@ -144,7 +144,7 @@
 //#endif  
 void matrix_size(size_t *M, size_t *N, int flag) {
 	if (flag == 1) {
-		std::cout << "¬ведите размер матрицы, где M - кол-во столбцов, N - кол-во строк" << std::endl;
+		std::cout << "¬ведите размер матрицы, где M - кол-во строк, N - кол-во столбцовк" << std::endl;
 		std::cout << "M:";
 		std::cin >> *M;
 		std::cout << std::endl << "N:";
@@ -258,9 +258,11 @@ Matrix<int> mult_matrix_with_matrix(size_t *M, size_t *N, Matrix<int>* matrix) {
 
 }
 
-void enter_matrix(size_t *M, size_t *N, Matrix<int> *matrix, int flag) {
+Matrix<int> enter_matrix(size_t *M, size_t *N, int flag) {
 	matrix_size(M, N, flag);
-	matrix->input_matrix();
+	Matrix<int> matrix(*M, *N);
+	(matrix).input_matrix();
+	return matrix;
 }
 void choose_main_menu(char *choice, size_t *M, size_t *N, Matrix<int>* matrix) {
 	std::cout << "¬аш выбор: ";
@@ -315,8 +317,8 @@ void main_menu() {
 
 }
 void work_with_matrix(size_t* M, size_t* N, char* choice) {
-	Matrix<int> matrix_1;
-	enter_matrix(M, N, &matrix_1, 1);
+	Matrix<int> matrix_1(*M, *N);
+	matrix_1 = enter_matrix(M, N, 1);
 	while (*choice != '6') {
 		std::cout << "¬аша матрица: ";
 		matrix_1.print_matrix();
@@ -327,7 +329,7 @@ void work_with_matrix(size_t* M, size_t* N, char* choice) {
 }
 void work_with_triangle_matrix(size_t* M, size_t* N, char* choice) {
 	Matrix<int> matrix_1;
-	enter_matrix(M, N, &matrix_1, 1);
+	enter_matrix(M, N, 1);
 	while (*choice != '6') {
 		std::cout << "¬аша матрица: ";
 		matrix_1.print_matrix();
@@ -337,7 +339,7 @@ void work_with_triangle_matrix(size_t* M, size_t* N, char* choice) {
 	}
 }
 void choose_type_menu(char* choice) {
-	size_t M, N;
+	size_t M = 0, N = 0;
 	std::cout << "¬аш выбор: ";
 	*choice = _getch();
 	system("cls");

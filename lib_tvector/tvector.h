@@ -746,7 +746,6 @@ void TVector<T>::print_elems() {
             entrance++;
         }
     }
-    std::cout << std::endl;
     /*for (size_t i = 0; i < _capacity; i++) {
         std::cout << _data[i] << " ";
     }

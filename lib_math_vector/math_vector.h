@@ -5,8 +5,9 @@ template<typename T>
 class MVector : public TVector<T> {
 public:
 	MVector() : TVector<T>() {} //++
-	MVector(const T*, size_t) : TVector<T>(const T*, size_t) {} //++
-	MVector(const TVector<T>& other) : TVector<T>(other) {}
+	MVector(const T*, size_t) : TVector<T>(const T*) {} //++
+	MVector(const TVector<T>& other) : TVector<T>(other) {} //++
+	MVector(size_t size); //++
 
 	MVector<T>& operator+(const MVector<T>& other); //++
 	MVector<T>& operator-(const MVector<T> other); //++
@@ -16,7 +17,17 @@ public:
 	MVector<T>& operator/(const T& num);  //++
 
 };
+template<typename T>
+MVector<T>::MVector(size_t size) {
+	_capacity = (size / STEP_OF_CAPACITY + 1) * STEP_OF_CAPACITY;
+	_size = size;
+	_data = new T[_capacity];
+	_states = new State[_capacity];
+	for (size_t i = 0; i < _capacity; i++) {
+		_states[i] = empty;
+	}
 
+}
 template<typename T>
 MVector<T>& MVector<T>::operator*(const T& num) {
 	for (size_t i = 0; i < (*this)._capacity; i++) {
