@@ -56,9 +56,7 @@ Stack<T>::Stack(const Stack<T>& other) : _size(other._size), _top(other._top) {
 }
 template<typename T>
 Stack<T>::~Stack() {
- //   _top = -1;
-	//_size = 0;
-	delete _data;
+	delete[] _data;
 }
 template<typename T>
 Stack<T>::Stack(int size) {
