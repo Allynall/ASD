@@ -84,6 +84,24 @@ TEST(TestQueueLib, head_in_queue) {
     queue_1.push(8);
 
     EXPECT_EQ(7, queue_1.head());
+    /*EXPECT_EQ(8, queue_1.tail());*/
+    EXPECT_EQ(2, queue_1.get_count());
+}
+TEST(TestQueueLib, tail_in_empty_queue) {
+    // Arrange
+    Queue<int> queue_1(2);
+
+    ASSERT_ANY_THROW(queue_1.tail());
+}
+TEST(TestQueueLib, tail_in_queue) {
+    // Arrange
+    Queue<int> queue_1(3);
+    queue_1.push(3);    //78
+    queue_1.push(7);
+    queue_1.pop();
+    queue_1.push(8);
+
+    /*EXPECT_EQ(7, queue_1.head());*/
     EXPECT_EQ(8, queue_1.tail());
     EXPECT_EQ(2, queue_1.get_count());
 }

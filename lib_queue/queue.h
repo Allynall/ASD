@@ -27,7 +27,7 @@ public:
 
 	inline bool is_empty() const noexcept; //++
 	inline bool is_full() const noexcept; //++
-	void clear() noexcept;
+	void clear() noexcept; //++
 };
 
 template<typename T>

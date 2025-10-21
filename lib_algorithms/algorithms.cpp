@@ -1,4 +1,5 @@
 #include "algorithms.h"
+#include "../lib_stack/stack.h"
 #include <iostream>
 
 int random_position(Matrix<int> matrix) {
@@ -37,5 +38,65 @@ int search_local_minimum_in_matrix(Matrix<int> matrix) {
 			return min;
 		}
 		steps++;
+	}
+}
+
+
+
+
+
+//Открытие и закрытие скобок
+bool check_breckets(std::string str) {
+    Stack <char> stack(str.length());
+	for (int i = 0; i < str.length(); i++) {
+
+		if ((str[i] == '(') || (str[i] == '[') || (str[i] == '{')) {
+			stack.push(str[i]);
+		}
+
+		if ((str[i] == char(')')) || (str[i] == char(']')) || (str[i] == char('}'))) {
+
+			if (stack.is_empty()) {
+				return false;
+			}
+
+			if (stack.top() == char('(') && str[i] != (char(')'))) {
+				return false;
+			}
+			if (stack.top() == char('[') && str[i] != (char(']'))) {
+				return false;
+			}
+			if (stack.top() == char('{') && str[i] != (char('}'))) {
+				return false;
+			}
+
+
+			
+			stack.pop();
+		}
+
+	}
+	if (stack.is_empty()) {
+		return true;
+	}
+	return false;
+}
+
+
+bool read_expression(std::string expression) {
+	Stack <char> stack(expression.length());
+	int count = 0;
+	for (int i = 0; i < expression.length(); i++) {
+		if (expression[i] != ' ') {
+			if (expression[i] > 122 || (expression[i] < 39 || expression[i] < 95 && expression[i] > 57) || expression[i] == 46 || expression[i] == 44) {
+				return false;
+			}
+			if (expression[i] == '(' || expression[i] == ')') {
+				count++;
+			}
+		}
+	}
+	if (count % 2 != 0) {
+		return false;
 	}
 }

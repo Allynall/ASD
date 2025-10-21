@@ -143,3 +143,49 @@ TEST(TestAlgorithmsLib, min_3_3_zenter) {
 
     EXPECT_TRUE(exept);
 }
+
+TEST(TestAlgorithmsLib, test_1) {
+    std::string str = "((";
+    EXPECT_FALSE(check_breckets(str));
+}
+
+TEST(TestAlgorithmsLib, test_2) {
+    std::string str = "()";
+    EXPECT_TRUE(check_breckets(str));
+}
+TEST(TestAlgorithmsLib, test_3) {
+    std::string str = "(()";
+    EXPECT_FALSE(check_breckets(str));
+}
+TEST(TestAlgorithmsLib, test_4) {
+    std::string str = "())";
+    EXPECT_FALSE(check_breckets(str));
+}
+TEST(TestAlgorithmsLib, test_5) {
+    std::string str = "([{}])";
+    EXPECT_TRUE(check_breckets(str));
+}
+TEST(TestAlgorithmsLib, test_6) {
+    std::string str = "()({})";
+    EXPECT_TRUE(check_breckets(str));
+}
+TEST(TestAlgorithmsLib, test_7) {
+    std::string str = "({}))";
+    EXPECT_FALSE(check_breckets(str));
+}
+TEST(TestAlgorithmsLib, test_2_1) {
+    std::string str = "(2 + 3))";
+    EXPECT_FALSE(read_expression(str));
+}
+TEST(TestAlgorithmsLib, test_2_2) {
+    std::string str = "((3 + 4)";
+    EXPECT_FALSE(read_expression(str));
+}
+TEST(TestAlgorithmsLib, test_2_3) {
+    std::string str = "(a + b)";
+    EXPECT_TRUE(read_expression(str));
+}
+TEST(TestAlgorithmsLib, test_2_4) {
+    std::string str = "(a &)";
+    EXPECT_FALSE(read_expression(str));
+}
