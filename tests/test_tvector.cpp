@@ -614,28 +614,27 @@ TEST(TestTVectorLib, reserve_return) {
     EXPECT_EQ(15, vec.capacity());
     EXPECT_EQ(0, vec.size());
 }
-//
-//bool test_58_shrink_to_fit_null_size() {
-//    TVector<int> vec;
-//    vec.shrink_to_fit();
-//    if (vec.capacity() != 0) return false;
-//    if (vec.size() != 0) return false;
-//    if (vec.data() != nullptr) return false;
-//    if (vec.states() != nullptr) return false;
-//    return true;
-//}
-//
-//bool test_59_shrink_to_fit() {
-//    int arr[16] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
-//    TVector<int> vec(arr, 16);
-//    vec.shrink_to_fit();
-//    if (vec.capacity() != 16) return false;
-//    for (size_t i = 0; i < vec.capacity(); i++) {
-//        if (vec.states()[i] != busy) return false;
-//    }
-//
-//    return true;
-//}
+
+TEST(TestTVectorLib, shrink_to_fit_null_size) {
+    // Arrange
+    TVector<int> vec;
+    vec.shrink_to_fit();
+
+    // Assert
+    EXPECT_EQ(0, vec.capacity());
+    EXPECT_EQ(0, vec.size());
+}
+
+TEST(TestTVectorLib, shrink_to_fit) {
+    // Arrange
+    TVector<int> vec({ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 });
+    vec.shrink_to_fit();
+
+    // Assert
+    EXPECT_EQ(16, vec.capacity());
+    EXPECT_EQ(16, vec.size());
+}
+
 //bool test_60_shrink_to_fit_after_empty_reserve() {
 //    TVector<int> vec;
 //    vec.reserve(5);
