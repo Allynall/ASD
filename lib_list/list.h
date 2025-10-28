@@ -30,7 +30,49 @@ public:
 
 	template <T>
 	friend std::ostream& operator<<(std::ostream& os, const List<T>& list); //++
+
+	class Iterator {
+		Node<T>* _current;
+	public:
+		Iterator() : _current(nullptr) {}
+		Iterator(Node<T>* node) : _current(node) {}
+
+		Iterator& Iterator::operator=(const Iterator& other) noexcept{
+			_current = other._current;
+			return *this;
+		}
+
+		Iterator& operator++() {
+			//возможно проверка
+			_current = _current->next;
+			return *this;
+		}; //it++
+		Iterator operator++(int) {
+			Iterator temp = *this;
+			(*this)++;
+			return temp;
+		}// ++it
+
+
+		bool operator!=(const Iterator& other) {
+			return (_current != other._current);
+		}
+		T operator*() {
+			return (current->value);
+		}
+
+	};
+	Iterator begin() {
+		return Iterator(_head);
+	} //++
+	Iterator end() {
+		return Iterator(_tail);
+	}//++
+
 };
+
+
+
 
 template <class T>
 List<T>::List() {
