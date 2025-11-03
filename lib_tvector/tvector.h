@@ -244,7 +244,7 @@ inline T& TVector<T>::front() noexcept {
 
 template<class T>
 inline T& TVector<T>::back() noexcept {
-    for (size_t i = _size; i > 0; --i) {
+    for (size_t i = _capacity; i > 0; --i) {
         if (_states[i - 1] == busy) {
             return _data[i - 1];
         }

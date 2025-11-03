@@ -43,8 +43,9 @@ public:
 		}
 
 		Iterator& operator++() {
-			//возможно проверка
-			_current = _current->next;
+			if (_current != nullptr) {
+				_current = _current->next;
+			}
 			return *this;
 		}; //it++
 		Iterator operator++(int) {
@@ -57,8 +58,8 @@ public:
 		bool operator!=(const Iterator& other) {
 			return (_current != other._current);
 		}
-		T operator*() {
-			return (current->value);
+		T& operator*() {
+			return (_current->value);
 		}
 
 	};
@@ -66,7 +67,7 @@ public:
 		return Iterator(_head);
 	} //++
 	Iterator end() {
-		return Iterator(_tail);
+		return Iterator(nullptr);
 	}//++
 
 };
