@@ -1,132 +1,137 @@
 #include <gtest/gtest.h>
-#include "../lib_list/list.h"
+#include "../lib_doubly_linked_list/doubly_linked_list.h"
 #include "../lib_tvector/tvector.h"
 
-TEST(TestListLib, default_constructor) {
+TEST(TestDoublyLinkedListLib, default_constructor) {
     // Arrange
-    List<int> list;
+    DoublyLinkedList<int> list;
 
     EXPECT_EQ(0, list.count());
     EXPECT_EQ(nullptr, list.head());
     EXPECT_EQ(nullptr, list.tail());
 }
-
-TEST(TestListLib, copy_constructor) {
+TEST(TestDoublyLinkedListLib, copy_constructor) {
     // Arrange
-    List<int> list_1;
+    DoublyLinkedList<int> list_1;
     list_1.push_front(5);
     list_1.push_front(6);
-    List<int> list_2(list_1);
+    DoublyLinkedList<int> list_2(list_1);
 
     EXPECT_EQ(2, list_2.count());
     EXPECT_EQ(6, list_2.head()->value);
+    EXPECT_EQ(6, list_2.tail()->prev->value);
     EXPECT_EQ(5, list_2.tail()->value);
 }
 
-TEST(TestListLib, is_empty_true) {
+TEST(TestDoublyLinkedListLib, is_empty_true) {
     // Arrange
-    List<int> list;
+    DoublyLinkedList<int> list;
 
     EXPECT_TRUE(list.is_empty());
 }
-TEST(TestListLib, is_empty_false) {
+
+TEST(TestDoublyLinkedListLib, is_empty_false) {
     // Arrange
-    List<int> list;
+    DoublyLinkedList<int> list;
     list.push_front(5);
 
     EXPECT_FALSE(list.is_empty());
 }
 
-TEST(TestListLib, clear) {
+TEST(TestDoublyLinkedListLib, clear) {
     // Arrange
-    List<int> list;
+    DoublyLinkedList<int> list;
     list.push_front(5);
     list.clear();
 
     EXPECT_TRUE(list.is_empty());
 }
-TEST(TestListLib, count) {
+TEST(TestDoublyLinkedListLib, count) {
     // Arrange
-    List<int> list;
+    DoublyLinkedList<int> list;
     list.push_front(5);
     list.push_front(7);
 
     EXPECT_EQ(2, list.count());
 }
-TEST(TestListLib, count_empty) {
+TEST(TestDoublyLinkedListLib, count_empty) {
     // Arrange
-    List<int> list;
+    DoublyLinkedList<int> list;
 
     EXPECT_EQ(0, list.count());
 }
-TEST(TestListLib, count_after_clear) {
+TEST(TestDoublyLinkedListLib, count_after_clear) {
     // Arrange
-    List<int> list;
+    DoublyLinkedList<int> list;
     list.push_front(5);
     list.clear();
 
     EXPECT_EQ(0, list.count());
 }
 
-TEST(TestListLib, head) {
+TEST(TestDoublyLinkedListLib, head) {
     // Arrange
-    List<int> list;
+    DoublyLinkedList<int> list;
     list.push_front(5);
     list.push_front(7);
 
     EXPECT_EQ(7, list.head()->value);
 }
 
-TEST(TestListLib, tail) {
+TEST(TestDoublyLinkedListLib, tail) {
     // Arrange
-    List<int> list;
+    DoublyLinkedList<int> list;
     list.push_front(5);
     list.push_front(7);
 
     EXPECT_EQ(5, list.tail()->value);
+    EXPECT_EQ(7, list.tail()->prev->value);
 }
-TEST(TestListLib, push_front) {
+TEST(TestDoublyLinkedListLib, push_front) {
     // Arrange
-    List<int> list;
+    DoublyLinkedList<int> list;
     list.push_front(5);
     list.push_front(6);
 
     EXPECT_EQ(2, list.count());
     EXPECT_EQ(6, list.head()->value);
     EXPECT_EQ(5, list.tail()->value);
+    EXPECT_EQ(6, list.tail()->prev->value);
 }
 
-TEST(TestListLib, push_back) {
+TEST(TestDoublyLinkedListLib, push_back) {
     // Arrange
-    List<int> list;
+    DoublyLinkedList<int> list;
     list.push_back(5);
     list.push_back(6);
 
     EXPECT_EQ(2, list.count());
     EXPECT_EQ(5, list.head()->value);
     EXPECT_EQ(6, list.tail()->value);
+    EXPECT_EQ(5, list.tail()->prev->value);
 }
 
-TEST(TestListLib, push_front_back) {
+TEST(TestDoublyLinkedListLib, push_front_back) {
     // Arrange
-    List<int> list;
+    DoublyLinkedList<int> list;
     list.push_back(5);
     list.push_front(7);
 
     EXPECT_EQ(2, list.count());
     EXPECT_EQ(7, list.head()->value);
     EXPECT_EQ(5, list.tail()->value);
+    EXPECT_EQ(7, list.tail()->prev->value);
 }
-TEST(TestListLib,insert_adress_throw) {
+TEST(TestDoublyLinkedListLib, insert_adress_throw) {
     // Arrange
-    List<int> list;
+    DoublyLinkedList<int> list;
     list.push_back(5);
     ASSERT_ANY_THROW(list.insert(list.head()->next, 8););
 }
 
-TEST(TestListLib, insert_adress) {
+TEST(TestDoublyLinkedListLib, insert_adress) {
     // Arrange
-    List<int> list;
+    DoublyLinkedList<int> list;
     list.push_front(9);
     list.push_back(5);
     list.push_back(6);
@@ -135,18 +140,19 @@ TEST(TestListLib, insert_adress) {
     EXPECT_EQ(4, list.count());
     EXPECT_EQ(9, list.head()->value);
     EXPECT_EQ(6, list.tail()->value);
+    EXPECT_EQ(5, list.tail()->prev->value);
 }
 
-TEST(TestListLib, insert_pos_throw) {
+TEST(TestDoublyLinkedListLib, insert_pos_throw) {
     // Arrange
-    List<int> list;
+    DoublyLinkedList<int> list;
     list.push_back(5);
     ASSERT_ANY_THROW(list.insert(5, 8));
 }
 
-TEST(TestListLib, insert_pos) {
+TEST(TestDoublyLinkedListLib, insert_pos) {
     // Arrange
-    List<int> list;
+    DoublyLinkedList<int> list;
     list.push_front(9);
     list.push_back(5);
     list.push_back(6);
@@ -155,10 +161,12 @@ TEST(TestListLib, insert_pos) {
     EXPECT_EQ(4, list.count());
     EXPECT_EQ(9, list.head()->value);
     EXPECT_EQ(6, list.tail()->value);
+    EXPECT_EQ(5, list.tail()->prev->value);
 }
-TEST(TestListLib, pop_front) {
+
+TEST(TestDoublyLinkedListLib, pop_front) {
     // Arrange
-    List<int> list;
+    DoublyLinkedList<int> list;
     list.push_back(5);
     list.push_back(7);
     list.push_back(8);
@@ -167,16 +175,17 @@ TEST(TestListLib, pop_front) {
     EXPECT_EQ(2, list.count());
     EXPECT_EQ(7, list.head()->value);
     EXPECT_EQ(8, list.tail()->value);
+    EXPECT_EQ(nullptr, list.head()->prev);
 }
-TEST(TestListLib, pop_front_throw) {
+TEST(TestDoublyLinkedListLib, pop_front_throw) {
     // Arrange
-    List<int> list;
+    DoublyLinkedList<int> list;
 
     ASSERT_ANY_THROW(list.pop_front());
 }
-TEST(TestListLib, pop_back) {
+TEST(TestDoublyLinkedListLib, pop_back) {
     // Arrange
-    List<int> list;
+    DoublyLinkedList<int> list;
     list.push_back(5);
     list.push_back(7);
     list.push_back(8);
@@ -185,22 +194,17 @@ TEST(TestListLib, pop_back) {
     EXPECT_EQ(2, list.count());
     EXPECT_EQ(5, list.head()->value);
     EXPECT_EQ(7, list.tail()->value);
+    EXPECT_EQ(5, list.tail()->prev->value);
 }
-TEST(TestListLib, pop_back_throw) {
+TEST(TestDoublyLinkedListLib, pop_back_throw) {
     // Arrange
-    List<int> list;
+    DoublyLinkedList<int> list;
 
     ASSERT_ANY_THROW(list.pop_back());
 }
-TEST(TestListLib,erase_adress_throw) {
+TEST(TestDoublyLinkedListLib, erase_adress) {
     // Arrange
-    List<int> list;
-    ASSERT_ANY_THROW(list.erase(list.head()));
-}
-
-TEST(TestListLib, erase_adress) {
-    // Arrange
-    List<int> list;
+    DoublyLinkedList<int> list;
     list.push_front(9);
     list.push_back(5);
     list.push_back(6);
@@ -210,16 +214,17 @@ TEST(TestListLib, erase_adress) {
     EXPECT_EQ(2, list.count());
     EXPECT_EQ(9, list.head()->value);
     EXPECT_EQ(6, list.tail()->value);
+    EXPECT_EQ(9, list.tail()->prev->value);
 }
-TEST(TestListLib, erase_pos_throw) {
+TEST(TestDoublyLinkedListLib, erase_pos_throw) {
     // Arrange
-    List<int> list;
+    DoublyLinkedList<int> list;
     ASSERT_ANY_THROW(list.erase(4));
 }
 
-TEST(TestListLib, erase_pos) {
+TEST(TestDoublyLinkedListLib, erase_pos) {
     // Arrange
-    List<int> list;
+    DoublyLinkedList<int> list;
     list.push_front(9);
     list.push_back(5);
     list.push_back(6);
@@ -228,49 +233,5 @@ TEST(TestListLib, erase_pos) {
     EXPECT_EQ(2, list.count());
     EXPECT_EQ(9, list.head()->value);
     EXPECT_EQ(6, list.tail()->value);
+    EXPECT_EQ(9, list.tail()->prev->value);
 }
-TEST(TestListLibIterator, iterator_empty_list) {
-    List<int> list;
-    int count = 0;
-    for (List<int>::Iterator it = list.begin(); it != list.end(); ++it) {
-        count++;
-    }
-    EXPECT_TRUE(list.is_empty());
-    EXPECT_EQ(0, list.count());
-    EXPECT_EQ(nullptr, list.head());
-    EXPECT_EQ(nullptr, list.tail());
-    EXPECT_EQ(0, count);
-}
-TEST(TestListLibIterator, iterator_reading) {
-    List<int> list_1;
-    TVector<int> vector;
-    list_1.push_back(1);
-    list_1.push_back(2);
-    list_1.push_back(3);
-    list_1.push_back(4);
-
-    for (List<int>::Iterator it = list_1.begin(); it != list_1.end(); ++it) {
-        vector.push_back_elem(*it);
-    }
-
-    EXPECT_EQ(4, vector.size());
-    EXPECT_EQ(1, vector[0]);
-    EXPECT_EQ(2, vector[1]);
-    EXPECT_EQ(3, vector[2]);
-    EXPECT_EQ(4, vector[3]);
-}
-TEST(TestListLibIterator, iterator_writing) {
-    List<int> list;
-    list.push_back(1);
-    list.push_back(2);
-    list.push_back(3);
-    list.push_back(4);
-
-    for (List<int>::Iterator it = list.begin(); it != list.end(); ++it) {
-        *it = *it * 10;
-    }
-
-    EXPECT_EQ(4, list.count());
-    EXPECT_EQ(10, list.head()->value);
-    EXPECT_EQ(40, list.tail()->value);
-};

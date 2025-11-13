@@ -1,5 +1,6 @@
 #include "algorithms.h"
 #include "../lib_stack/stack.h"
+#include "../lib_list/list.h"
 #include <iostream>
 
 int random_position(Matrix<int> matrix) {
@@ -99,4 +100,19 @@ bool read_expression(std::string expression) {
 	if (count % 2 != 0) {
 		return false;
 	}
+}
+
+template <class T>
+bool is_looped(List<T>(*list)) {
+	List<int>::Iterator it_1 = (*list).begin();
+	List<int>::Iterator it_2 = (*list).begin();
+	while (it_1 != (*list).end() && it_2 != (*list).end())
+	{
+		++it_1;
+		++it_2;	++it_2;
+		if (it_1 == it_2) {
+			return true;
+		}
+	}
+	return false;
 }

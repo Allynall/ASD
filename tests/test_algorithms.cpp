@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "../lib_algorithms/algorithms.cpp"
+#include "../lib_list/list.h"
 
 TEST(TestAlgorithmsLib, throw_min) {
     // Arrange
@@ -189,3 +190,27 @@ TEST(TestAlgorithmsLib, test_2_4) {
     std::string str = "(a &)";
     EXPECT_FALSE(read_expression(str));
 }
+TEST(TestListLibIterator, iterator_looped_false) {
+    List<int> list;
+    list.push_back(1);
+    list.push_back(2);
+    list.push_back(3);
+    list.push_back(4);
+    EXPECT_FALSE(is_looped(&list));
+};
+
+TEST(TestListLibIterator, iterator_looped_true) {
+    List<int> list;
+    list.push_back(1);
+    Node<int>* cur = list.head();
+    list.push_back(2);
+    list.push_back(3);
+    list.push_back(4);
+
+    list.tail()->next = cur->next;
+
+    EXPECT_EQ(true, is_looped(&list));
+
+
+    list.tail()->next = nullptr;
+};
