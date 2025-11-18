@@ -28,6 +28,7 @@ add_subdirectory(lib_algorithms)
 add_subdirectory(lib_node)
 add_subdirectory(lib_list)
 add_subdirectory(lib_doubly_linked_list)
+add_subdirectory(lib_stack_through_list)
 add_subdirectory(lib_dsu)
 add_subdirectory(main)                # подключаем дополнительный CMakeLists.txt из подкаталога с именем main
 

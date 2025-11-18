@@ -297,17 +297,17 @@ void List<T>::erase(size_t pos) {
 	erase(cur);
 };
 
-template <class T>
-std::ostream& operator<<(std::ostream& os, const List<T>& list) {
-	Node<T>* cur = list.head();
-	os << "[";
-	while (cur != nullptr) {
-		os << cur->value;
-		if (cur->next != nullptr) {
-			os << " ";
-		}
-		cur = cur->next;
-	}
-	os << "]";
-	return os;
-}
+//template <class T>
+//std::ostream& operator<<(std::ostream& os, const List<T>& list) {
+//	Node<T>* cur = list.head();
+//	os << "[";
+//	while (cur != nullptr) {
+//		os << cur->value;
+//		if (cur->next != nullptr) {
+//			os << " ";
+//		}
+//		cur = cur->next;
+//	}
+//	os << "]";
+//	return os;
+//}
