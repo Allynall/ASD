@@ -1,0 +1,2 @@
+create_project_lib(UnsortedTable)
+add_depend(UnsortedTable ITable lib_i_table)
