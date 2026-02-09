@@ -27,6 +27,66 @@ public:
 	void erase(size_t pos); //++
 	void erase(Node <T>* node); //++
 
+	class Iterator {
+		Node<T>* _current;
+	public:
+		Iterator() : _current(nullptr) {}
+		Iterator(Node<T>* node) : _current(node) {}
+
+		Iterator& Iterator::operator=(const Iterator& other) noexcept {
+			_current = other._current;
+			return *this;
+		}
+
+		Iterator& operator++() {
+			if (_current != nullptr) {
+				_current = _current->next;
+			}
+			return *this;
+		}; //it++
+		Iterator operator++(int) {
+			Iterator temp = *this;
+			++(*this);
+			return temp;
+		}// ++it
+		Iterator& operator--() {
+			if (_current != nullptr) {
+				_current = _current->prev;
+			}
+			return *this;
+		}; //it--
+		Iterator operator--(int) {
+			Iterator temp = *this;
+			--(*this);
+			return temp;
+		}// --it
+
+
+		bool operator!=(const Iterator& other) {
+			return (_current != other._current);
+		}
+
+		bool operator==(const Iterator& other) {
+			return (_current == other._current);
+		}
+
+		T& operator*() {
+			return (_current->value);
+		}
+
+	};
+	Iterator begin() {
+		return Iterator(_head);
+	} //++
+	Iterator end() {
+		return Iterator(nullptr);
+	}//++
+	Iterator begin_back() {
+		return Iterator(_tail);
+	} //++
+	Iterator end_back() {
+		return Iterator(nullptr);
+	}//++
 };
 
 template <class T>
@@ -64,6 +124,8 @@ void DoublyLinkedList<T>::clear() {
 	while (_head != nullptr) {
 		Node<T>* temp = _head;
 		_head = _head->next;
+		if (_head != nullptr) {
+		}
 		temp->next = nullptr;
 		delete temp;
 	}
@@ -118,6 +180,7 @@ template <class T>
 void DoublyLinkedList<T>::insert(Node <T>* node, const T& val) {
 	if (node == _tail) {
 		push_back(val);
+		return;
 	}
 
 	Node <T>* new_node = new Node <T>(val);
@@ -136,6 +199,7 @@ template <class T>
 void DoublyLinkedList<T>::insert(size_t pos, const T& val) {
 	if (pos == 0) {
 		push_front(val);
+		return;
 	}
 	if (pos == _count) {
 		push_back(val);
@@ -161,6 +225,7 @@ void DoublyLinkedList<T>::pop_front() {
 	if (is_empty()) {
 		throw std::invalid_argument("List is empty");
 	}
+	_count--;
 	if (_tail == _head) {
 		delete _head;
 		_head = nullptr;
@@ -169,7 +234,6 @@ void DoublyLinkedList<T>::pop_front() {
 	}
 	_head = _head->next;
 	_head->prev = nullptr;
-	_count--;
 };
 
 template <class T>
@@ -177,18 +241,18 @@ void DoublyLinkedList<T>::pop_back() {
 	if (is_empty()) {
 		throw std::invalid_argument("List is empty");
 	}
+	_count--;
 	if (_tail == _head) {
 		delete _head;
 		_head = nullptr;
 		_tail = nullptr;
 		return;
 	}
+
 	Node<T>* temp = _tail;  
 	_tail = _tail->prev;      
 	_tail->next = nullptr;    
-	delete temp;              
-
-	_count--;
+	delete temp; 
 };
 
 template <class T>

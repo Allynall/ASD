@@ -34,6 +34,21 @@ TEST(TestDSULib, unionn_transitivity) {
     EXPECT_EQ(0, dsu.find(1));
     EXPECT_EQ(0, dsu.find(2));
     EXPECT_EQ(3, dsu.find(3));
+    EXPECT_EQ(1, dsu.rank()[0]);
+}
+TEST(TestDSULib, unionn_rank) {
+    // Arrange
+    DSU dsu(4);
+
+    dsu.unionn(0, 1);
+    dsu.unionn(2, 3);
+    dsu.unionn(0, 2);
+
+    EXPECT_EQ(0, dsu.find(0));
+    EXPECT_EQ(0, dsu.find(1));
+    EXPECT_EQ(0, dsu.find(2));
+    EXPECT_EQ(0, dsu.find(3));
+    EXPECT_EQ(2, dsu.rank()[0]);
 }
 TEST(TestDSULib, unionn_repeated_union) {
     DSU dsu(4);

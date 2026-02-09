@@ -93,6 +93,7 @@ public:
     bool operator==(const TVector<T>& other) const noexcept; //!!!добавлен noexcept
     bool operator!=(const TVector<T>& other) const noexcept; //!!!добавлен noexcept
     T& operator[](size_t pos) noexcept; //!!!добавлен noexcept
+    const T& operator[](size_t pos) const noexcept;
 
     void print_elems();
     void print_states();
@@ -137,6 +138,7 @@ TVector<T>::TVector(size_t size) {
         _states[i] = empty;
     }
 
+    _deleted = 0;
 }
 
 template<class T>
@@ -735,6 +737,20 @@ T& TVector<T>::operator[](size_t pos) noexcept { //!!!добавлен noexcept
         }
     }
     _states[pos] = busy;
+    return _data[pos];
+}
+
+template <typename T>
+const T& TVector<T>::operator[](size_t pos) const noexcept {
+    int busy_elems = 0;
+    for (size_t i = 0; i < _size + _deleted; i++) {
+        if (_states[i] == busy) {
+            if (pos == busy_elems) {
+                return _data[i];
+            }
+            busy_elems += 1;
+        }
+    }
     return _data[pos];
 }
 

@@ -142,7 +142,7 @@
 //}
 
 //#endif  
-void matrix_size(size_t *M, size_t *N, int flag) {
+void matrix_size(size_t* M, size_t* N, int flag) {
 	if (flag == 1) {
 		std::cout << "Введите размер матрицы, где M - кол-во строк, N - кол-во столбцовк" << std::endl;
 		std::cout << "M:";
@@ -154,7 +154,7 @@ void matrix_size(size_t *M, size_t *N, int flag) {
 		std::cout << "Введите размер матрицы, матрица является квадратной, поэтому введите одно значени(M*M)" << std::endl;
 		std::cout << "M:";
 		std::cin >> *M;
-		*M = *N;
+		*N = *M;
 	}
 }
 
@@ -178,7 +178,7 @@ Matrix<int> sub_matrix(size_t M, size_t N, Matrix<int>* matrix) {
 	matrix_2.input_matrix();
 	return (*matrix - matrix_2);
 }
-Matrix<int> add_matrix(size_t M, size_t N, Matrix<int> *matrix) {
+Matrix<int> add_matrix(size_t M, size_t N, Matrix<int>* matrix) {
 	size_t M_second;
 	size_t N_second;
 
@@ -190,7 +190,7 @@ Matrix<int> add_matrix(size_t M, size_t N, Matrix<int> *matrix) {
 	}
 	Matrix<int> matrix_2(M_second, N_second);
 	matrix_2.input_matrix();
-	return (*matrix+matrix_2);
+	return (*matrix + matrix_2);
 }
 TriangleMatrix<int> add_triangle_matrix(size_t M, size_t N, TriangleMatrix<int>* matrix) {
 	std::cout << "Введите второе слагаемое (вторую матрицу) " << std::endl;
@@ -207,17 +207,7 @@ TriangleMatrix<int> sub_triangle_matrix(size_t M, size_t N, TriangleMatrix<int>*
 	matrix_2.input_triangle_matrix();
 	return (*matrix - matrix_2);
 }
-TriangleMatrix<int> mult_triangle_matrix_with_matrix(size_t* M, size_t* N, TriangleMatrix<int>* matrix) {
-	std::cout << "----УМНОЖЕНИЕ НА МАТРИЦУ----" << std::endl;
 
-	std::cout << "Введите второе слагаемое (вторую матрицу) " << std::endl;
-	std::cout << "Размер матрицы тот же" << std::endl;
-
-	TriangleMatrix<int> matrix_2(*M, *N);
-	matrix_2.input_triangle_matrix();
-	return (*matrix * matrix_2);
-
-}
 TriangleMatrix<int> mult_triangle_matrix_with_number(TriangleMatrix<int>* matrix) {
 	int number = 0;
 	std::cout << "----УМНОЖЕНИЕ НА СКАЛЯР----" << std::endl;
@@ -227,7 +217,7 @@ TriangleMatrix<int> mult_triangle_matrix_with_number(TriangleMatrix<int>* matrix
 
 	return (*matrix * number);
 }
-Matrix<int> mult_matrix_with_number(Matrix<int> *matrix) {
+Matrix<int> mult_matrix_with_number(Matrix<int>* matrix) {
 	int number = 0;
 	std::cout << "----УМНОЖЕНИЕ НА СКАЛЯР----" << std::endl;
 	std::cout << "Введите число: ";
@@ -241,7 +231,7 @@ Matrix<int> mult_matrix_with_number(Matrix<int> *matrix) {
 //	std::cout << "----УМНОЖЕНИЕ НА ВЕКТОР----" << std::endl;
 //	std::cout << "Введите вектор: ";
 //}
-Matrix<int> mult_matrix_with_matrix(size_t *M, size_t *N, Matrix<int>* matrix) {
+Matrix<int> mult_matrix_with_matrix(size_t* M, size_t* N, Matrix<int>* matrix) {
 	std::cout << "----УМНОЖЕНИЕ НА МАТРИЦУ----" << std::endl;
 	size_t M_second;
 	size_t N_second;
@@ -259,16 +249,34 @@ Matrix<int> mult_matrix_with_matrix(size_t *M, size_t *N, Matrix<int>* matrix) {
 	matrix_2.input_matrix();
 
 	return (*matrix * matrix_2);
-	
+
+}
+TriangleMatrix<int> mult_triangle_matrix_with_matrix(size_t M, size_t N, TriangleMatrix<int>* matrix) {
+	std::cout << "----УМНОЖЕНИЕ НА МАТРИЦУ----" << std::endl;
+	std::cout << "Введите второй множитель (вторую матрицу) " << std::endl;
+	std::cout << "Размер матрицы тот же" << std::endl;
+	TriangleMatrix<int> matrix_2(M, N);
+	matrix_2.input_triangle_matrix();
+	return (*matrix * matrix_2);
+
 }
 
-Matrix<int> enter_matrix(size_t *M, size_t *N, int flag) {
+
+Matrix<int> enter_matrix(size_t* M, size_t* N, int flag) {
 	matrix_size(M, N, flag);
 	Matrix<int> matrix(*M, *N);
 	(matrix).input_matrix();
 	return matrix;
 }
-void choose_main_menu(char *choice, size_t *M, size_t *N, Matrix<int>* matrix) {
+
+TriangleMatrix<int> enter_triangle_matrix(size_t* M, size_t* N, int flag) {
+	matrix_size(M, N, flag);
+	TriangleMatrix<int> matrix(*M, *N);
+	(matrix).input_triangle_matrix();
+	return matrix;
+
+}
+void choose_main_menu(char* choice, size_t* M, size_t* N, Matrix<int>* matrix) {
 	std::cout << "Ваш выбор: ";
 	*choice = _getch();
 	system("cls");
@@ -287,23 +295,23 @@ void choose_main_menu(char *choice, size_t *M, size_t *N, Matrix<int>* matrix) {
 		*matrix = mult_matrix_with_matrix(M, N, matrix);
 	}
 }
-void choose_triangle_menu(char* choice, size_t* M, size_t* N, TriangleMatrix<int>* matrix) {
+void choose_triangle_main_menu(char* choice, size_t* M, size_t* N, TriangleMatrix<int>* matrix) {
 	std::cout << "Ваш выбор: ";
 	*choice = _getch();
 	system("cls");
 	if (*choice == '1') {
 	}
 	else if (*choice == '2') {
-		add_triangle_matrix(*M, *N, matrix);
+		*matrix = add_triangle_matrix(*M, *N, matrix);
 	}
 	else if (*choice == '3') {
-		sub_triangle_matrix(*M, *N, matrix);
+		*matrix = sub_triangle_matrix(*M, *N, matrix);
 	}
 	else if (*choice == '4') {
-		mult_triangle_matrix_with_number(matrix);
+		*matrix = mult_triangle_matrix_with_number(matrix);
 	}
 	else if (*choice == '5') {
-		mult_triangle_matrix_with_matrix(M, N, matrix);
+		*matrix = mult_triangle_matrix_with_matrix(*M, *N, matrix);
 	}
 }
 
@@ -332,14 +340,14 @@ void work_with_matrix(size_t* M, size_t* N, char* choice) {
 	}
 }
 void work_with_triangle_matrix(size_t* M, size_t* N, char* choice) {
-	Matrix<int> matrix_1;
-	enter_matrix(M, N, 1);
+	TriangleMatrix<int> matrix_1(*M, *N);
+	matrix_1 = enter_triangle_matrix(M, N, 0);
 	while (*choice != '6') {
 		std::cout << "Ваша матрица: ";
-		matrix_1.print_matrix();
+		matrix_1.print_triangle_matrix();
 		std::cout << std::endl;
 		main_menu();
-		choose_main_menu(choice, M, N, &matrix_1);
+		choose_triangle_main_menu(choice, M, N, &matrix_1);
 	}
 }
 void choose_type_menu(char* choice) {
@@ -347,14 +355,14 @@ void choose_type_menu(char* choice) {
 	std::cout << "Ваш выбор: ";
 	*choice = _getch();
 	system("cls");
-	
-		if (*choice == '1') {
-			work_with_matrix(&M, &N, choice);
-		}
-		else if (*choice == '2') {
-			work_with_triangle_matrix(&M, &N, choice);
-		}
-	
+
+	if (*choice == '1') {
+		work_with_matrix(&M, &N, choice);
+	}
+	else if (*choice == '2') {
+		work_with_triangle_matrix(&M, &N, choice);
+	}
+
 }
 
 void matrix_type_menu() {

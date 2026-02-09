@@ -39,7 +39,6 @@ T Stack<T>::top() const {
 	if (is_empty()) {
 		throw std::invalid_argument("Stack is empty");
 	}
-	//T*
 	return _data[_top];
 }
 
@@ -99,5 +98,5 @@ void Stack<T>::pop() {
 	if (is_empty()) {
 		throw std::invalid_argument("Stack is empty");
 	}
-	--_top;
+	_top--;
 }

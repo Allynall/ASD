@@ -40,7 +40,7 @@ TEST(TestQueueLib, queue_is_empty_true) {
 
     EXPECT_EQ(true, queue_1.is_empty());
 }
-TEST(TestQueueLib, stack_is_empty_false) {
+TEST(TestQueueLib, queue_is_empty_false) {
     // Arrange
     Queue<int> queue_1(2);
     queue_1.push(2);
@@ -55,7 +55,7 @@ TEST(TestQueueLib, queue_is_empty_true_after_pop) {
 
     EXPECT_EQ(true, queue_1.is_empty());
 }
-TEST(TestQueueLib, stack_is_full_true) {
+TEST(TestQueueLib, queue_is_full_true) {
     // Arrange
     Queue<int> queue_1(2);
     queue_1.push(2);
@@ -63,7 +63,7 @@ TEST(TestQueueLib, stack_is_full_true) {
 
     EXPECT_EQ(true, queue_1.is_full());
 }
-TEST(TestQueueLib, stack_is_full_false) {
+TEST(TestQueueLib, queue_is_full_false) {
     Queue<int> queue_1(2);
     queue_1.push(2);
 
@@ -149,7 +149,7 @@ TEST(TestQueueLib, pop_in_queue) {
     EXPECT_EQ(7, queue_1.tail());
     EXPECT_EQ(3, queue_1.get_count());
 }
-TEST(TestQueueLib, clear_stack) {
+TEST(TestQueueLib, clear_queue) {
     // Arrange
     Queue<int> queue_1(3);
     queue_1.push(3);
@@ -160,4 +160,25 @@ TEST(TestQueueLib, clear_stack) {
     EXPECT_EQ(0, queue_1.get_count());
     ASSERT_ANY_THROW(queue_1.head());
     ASSERT_ANY_THROW(queue_1.tail());
+}
+TEST(TestQueueLib, first_queue) {
+    // Arrange
+    Queue<int> queue_1(7);
+    queue_1.push(0);
+    queue_1.push(0);
+    queue_1.push(0);
+
+    for (int i = 1; i < 5; i++) {
+        queue_1.push(i);
+    }
+    queue_1.pop();
+    queue_1.pop();
+    queue_1.pop();
+
+    queue_1.push(5);
+
+    EXPECT_EQ(7, queue_1.get_size());
+    EXPECT_EQ(5, queue_1.get_count());
+    EXPECT_EQ(1, queue_1.head());
+    EXPECT_EQ(5, queue_1.tail());
 }

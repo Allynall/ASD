@@ -9,6 +9,7 @@ TEST(TestMVectorLib, default_constructor) {
     EXPECT_TRUE(vec1.is_empty());
     EXPECT_EQ(0, vec1.size());
     EXPECT_EQ(15, vec1.capacity());
+    EXPECT_EQ(0, vec1.start_index());
 }
 TEST(TestMVectorLib, constructor_with_parameters) {
     // Arrange
@@ -19,16 +20,9 @@ TEST(TestMVectorLib, constructor_with_parameters) {
     EXPECT_EQ(14, vec1.size());
     EXPECT_EQ(1, vec1.front());
     EXPECT_EQ(14, vec1.back());
+    EXPECT_EQ(0, vec1.start_index());
 }
-TEST(TestMVectorLib, size_constructor) {
-    // Arrange
-    MVector<int> vec1(14);
 
-    // Assert
-    EXPECT_TRUE(vec1.is_empty());
-    EXPECT_EQ(14, vec1.size());
-    EXPECT_EQ(15, vec1.capacity());
-}
 TEST(TestMVectorLib, copy_constructor) {
     // Arrange
     MVector<int> vec1({ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 }), vec2(vec1);
@@ -40,6 +34,7 @@ TEST(TestMVectorLib, copy_constructor) {
     EXPECT_EQ(1, vec2.front());
     EXPECT_EQ(8, vec2[7]);
     EXPECT_EQ(14, vec2.back());
+    EXPECT_EQ(0, vec1.start_index());
 }
 TEST(TestMVectorLib, mult_with_scalar) {
     // Arrange
@@ -53,6 +48,7 @@ TEST(TestMVectorLib, mult_with_scalar) {
     EXPECT_EQ(5, vec1.front());
     EXPECT_EQ(40, vec1[7]);
     EXPECT_EQ(70, vec1.back());
+    EXPECT_EQ(0, vec1.start_index());
 }
 
 TEST(TestMVectorLib, div_with_scalar) {
@@ -67,6 +63,7 @@ TEST(TestMVectorLib, div_with_scalar) {
     EXPECT_EQ(1, vec1.front());
     EXPECT_EQ(4, vec1[3]);
     EXPECT_EQ(6, vec1.back());
+    EXPECT_EQ(0, vec1.start_index());
 }
 TEST(TestMVectorLib, Throw_from_add_vector_any_size) {
     // Arrange
@@ -87,6 +84,7 @@ TEST(TestMVectorLib, add_vectors) {
     EXPECT_EQ(3, vec1.front());
     EXPECT_EQ(6, vec1[1]);
     EXPECT_EQ(9, vec1.back());
+    EXPECT_EQ(0, vec1.start_index());
 }
 TEST(TestMVectorLib, Throw_from_sub_vector_any_size) {
     // Arrange
@@ -107,6 +105,7 @@ TEST(TestMVectorLib, sub_vector) {
     EXPECT_EQ(2, vec1.front());
     EXPECT_EQ(3, vec1[1]);
     EXPECT_EQ(4, vec1.back());
+    EXPECT_EQ(0, vec1.start_index());
 }
 TEST(TestMVectorLib, Throw_from_mult_vector_any_size) {
     // Arrange
@@ -126,7 +125,62 @@ TEST(TestMVectorLib, mult_vector_with_vector) {
     EXPECT_EQ(3, vec1.front());
     EXPECT_EQ(1, vec2.front());
 }
+TEST(TestMVectorLib, add_and_assign_vectors) {
+    // Arrange
+    MVector<int> vec1({ 2, 4, 6 }), vec2({ 1, 2, 3 });
 
+    //Act
+    vec1 += vec2;
+    // Assert
+    EXPECT_FALSE(vec1.is_empty());
+    EXPECT_EQ(3, vec1.size());
+    EXPECT_EQ(3, vec1.front());
+    EXPECT_EQ(6, vec1[1]);
+    EXPECT_EQ(9, vec1.back());
+    EXPECT_EQ(0, vec1.start_index());
+}
+TEST(TestMVectorLib, sub_and_assign_vectors) {
+    // Arrange
+    MVector<int> vec1({ 3, 5, 7 }), vec2({ 1, 2, 3 });
+
+    //Act
+    vec1 -= vec2;
+    // Assert
+    EXPECT_FALSE(vec1.is_empty());
+    EXPECT_EQ(3, vec1.size());
+    EXPECT_EQ(2, vec1.front());
+    EXPECT_EQ(3, vec1[1]);
+    EXPECT_EQ(4, vec1.back());
+    EXPECT_EQ(0, vec1.start_index());
+}
+TEST(TestMVectorLib, mult_with_number_and_assign_vectors) {
+    // Arrange
+    MVector<int> vec1({ 2, 4, 6 });
+
+    //Act
+    vec1 *= 2;
+    // Assert
+    EXPECT_FALSE(vec1.is_empty());
+    EXPECT_EQ(3, vec1.size());
+    EXPECT_EQ(4, vec1.front());
+    EXPECT_EQ(8, vec1[1]);
+    EXPECT_EQ(12, vec1.back());
+    EXPECT_EQ(0, vec1.start_index());
+}
+TEST(TestMVectorLib, div_with_number_and_assign_vectors) {
+    // Arrange
+    MVector<int> vec1({ 2, 4, 6 });
+
+    //Act
+    vec1 /= 2;
+    // Assert
+    EXPECT_FALSE(vec1.is_empty());
+    EXPECT_EQ(3, vec1.size());
+    EXPECT_EQ(1, vec1.front());
+    EXPECT_EQ(2, vec1[1]);
+    EXPECT_EQ(3, vec1.back());
+    EXPECT_EQ(0, vec1.start_index());
+}
 
 
 

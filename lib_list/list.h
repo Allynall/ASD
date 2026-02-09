@@ -28,8 +28,7 @@ public:
 	void erase(size_t pos);
 	void erase(Node <T>* node); //++
 
-	template <T>
-	friend std::ostream& operator<<(std::ostream& os, const List<T>& list); //++
+	//friend std::ostream& operator<<(std::ostream& os, const List<T>& list); //++
 
 	class Iterator {
 		Node<T>* _current;
@@ -50,7 +49,7 @@ public:
 		}; //it++
 		Iterator operator++(int) {
 			Iterator temp = *this;
-			(*this)++;
+			++(*this);
 			return temp;
 		}// ++it
 
@@ -67,6 +66,9 @@ public:
 			return (_current->value);
 		}
 
+		Node<T>* getNode() const {
+			return _current;
+		}
 	};
 	Iterator begin() {
 		return Iterator(_head);

@@ -243,21 +243,16 @@ TEST(TestListLibIterator, iterator_empty_list) {
 }
 TEST(TestListLibIterator, iterator_reading) {
     List<int> list_1;
-    TVector<int> vector;
     list_1.push_back(1);
     list_1.push_back(2);
     list_1.push_back(3);
     list_1.push_back(4);
 
+    int i = 1;
     for (List<int>::Iterator it = list_1.begin(); it != list_1.end(); ++it) {
-        vector.push_back_elem(*it);
+        EXPECT_EQ(i,*it);
+        i++;
     }
-
-    EXPECT_EQ(4, vector.size());
-    EXPECT_EQ(1, vector[0]);
-    EXPECT_EQ(2, vector[1]);
-    EXPECT_EQ(3, vector[2]);
-    EXPECT_EQ(4, vector[3]);
 }
 TEST(TestListLibIterator, iterator_writing) {
     List<int> list;
@@ -270,7 +265,9 @@ TEST(TestListLibIterator, iterator_writing) {
         *it = *it * 10;
     }
 
-    EXPECT_EQ(4, list.count());
-    EXPECT_EQ(10, list.head()->value);
-    EXPECT_EQ(40, list.tail()->value);
+    int i = 1;
+    for (List<int>::Iterator it = list.begin(); it != list.end(); ++it) {
+        EXPECT_EQ(i*10, *it);
+        i++;
+    }
 };

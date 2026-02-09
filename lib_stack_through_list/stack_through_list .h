@@ -9,7 +9,6 @@ class StackThroughList{
 	int _top;
 public:
 	StackThroughList(); //++
-	StackThroughList(int size); //++
 	StackThroughList(const StackThroughList<T>& other); //++
 
 	int get_size(); //++
@@ -19,7 +18,6 @@ public:
 	void pop(); //
 	T& top() ;  //++
 	inline bool is_empty() const noexcept; //++
-	inline bool is_full() const noexcept; //+
 	void clear() noexcept; //+
 };
 
@@ -37,7 +35,7 @@ template<class T>
 	if (is_empty()) {
 		throw std::invalid_argument("Stack is empty");
 	}
-	return _data.tail()->value;
+	return _data.head()->value;
 }
 
 template<typename T>
@@ -49,25 +47,6 @@ template<typename T>
 StackThroughList<T>::StackThroughList(const StackThroughList<T>& other) : _size(other._size), _top(other._top), _data(other._data) {
 }
 
-template<typename T>
-StackThroughList<T>::StackThroughList(int size) {
-	if (size <= 0) {
-		throw std::invalid_argument("Stack size must be positive");
-	}
-	else {
-		_size = size;
-		_data = List<T>();
-		for (int i = 0; i < _size; i++) {
-			_data.push_back(0);
-		}
-	}
-    _top = -1;
-}
-template<class T>
-inline bool StackThroughList<T>::is_full() const noexcept {
-	return _top == _size - 1;
-}
-
 template<class T>
 inline bool StackThroughList<T>::is_empty() const noexcept {
 	return _top == -1;
@@ -75,14 +54,13 @@ inline bool StackThroughList<T>::is_empty() const noexcept {
 template<typename T>
 void StackThroughList<T>::clear() noexcept {
 	_top = -1;
+	_size = 0;
 }
 template<class T>
 void StackThroughList<T>::push(T value) {
-	if (is_full()) {
-		throw std::logic_error("Stack is full");
-	}
 	_top = _top + 1;
-	_data.push_back(value);
+	_size++;
+	_data.push_front(value);
 
 }
 template<class T>
@@ -90,6 +68,7 @@ void StackThroughList<T>::pop() {
 	if (is_empty()) {
 		throw std::invalid_argument("Stack is empty");
 	}
-	--_top;
-	_data.pop_back();
+	_size--;
+	_top--;
+	_data.pop_front();
 }

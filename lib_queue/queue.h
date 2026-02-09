@@ -49,7 +49,7 @@ Queue<T>::Queue(int size) {
 template<typename T>
 Queue<T>::Queue(const Queue<T>& other) : _size(other._size), _head(other._head), _count(other._count) {
 	_data = new T[_size];
-	for (int i = 0; i <= _size; ++i) {
+	for (int i = 0; i <= _size; i++) {
 		_data[i] = other._data[i];
 	}
 }
@@ -77,7 +77,9 @@ void Queue<T>::push(T val) {
 	if (is_full()) {
 		throw std::invalid_argument("Queue is full");
 	}
-	_data[_count+_head] = val;
+
+	
+	_data[(_count + _head) % _size] = val;
 	_count++;
 }
 
@@ -119,5 +121,5 @@ T Queue<T>::tail() const {
 	if (is_empty()) {
 		throw std::invalid_argument("Queue is empty");
 	}
-	return _data[_count+_head-1];
+	return _data[(_count + _head - 1) % _size];
 }
