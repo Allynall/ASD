@@ -265,7 +265,8 @@ inline T* TVector<T>::end() noexcept {
 
 template<class T>
 inline bool TVector<T>::is_empty() const noexcept {
-    if (_size == 0) {
+    return (_size == 0);
+    /*if (_size == 0) {
         return 1;
     }
     else if (_size > 0) {
@@ -275,7 +276,7 @@ inline bool TVector<T>::is_empty() const noexcept {
             }
         }
     }
-    return 1;
+    return 1;*/
 }
 
 //вставка 
