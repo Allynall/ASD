@@ -1,6 +1,8 @@
 #include "algorithms.h"
 #include "../lib_stack/stack.h"
+#include "../lib_dsu/dsu.h"
 #include "../lib_list/list.h"
+#include "../lib_triangle_matrix/triangle_matrix.h"
 #include <iostream>
 
 int random_position(Matrix<int> matrix) {
@@ -220,4 +222,57 @@ int count_islands(int** mass, int x, int y) {
 	}
 
 	return count;
+}
+void write_parameters(size_t *N, size_t *M, size_t *x, size_t *y) {
+	std::cout << "¬ведите M (размер матрицы M): ";
+	std::cin >> *N;
+	std::cout << "¬ведите N (размер матрицы N): ";
+	std::cin >> *M;
+    //добавить проверку
+		std::cout << "¬ведите x (точка входа): ";
+		std::cin >> *x;
+		std::cout << "¬ведите y (точка выхода): ";
+		std::cin >> *y;
+}
+
+void fill_field(Matrix<size_t> *field, size_t M, size_t N) {
+	for (size_t i = 0; i < M; i++) {
+		for (size_t j = 0; j < N; j++) {
+			(*field)[i][j] = 1;
+		}
+	}
+}
+
+void print_field(size_t M, size_t N) {
+	size_t n = 0;
+	for (int i = 0; i < M; i++) {
+		std::cout << std::endl;
+		std::cout << "|";
+		for (int j = 0; j < N; j++) {
+			n++;
+			std::cout << n << "|";
+
+		}
+	}
+}
+
+void random_combinations(DSU *dsu, size_t M, size_t N) {
+	size_t flag = 0;
+	for (int i = 0; i < M*N-1; i++) {
+		flag = rand() % 2;
+		if (flag == 1) {
+			(*dsu).unionn(i, i + 1);
+		}
+	}
+}
+void Maze() {
+	size_t N, M, x, y;
+	write_parameters(&N, &M, &x, &y);
+
+	Matrix<size_t> field(M,  N);
+	fill_field(&field, M, N);
+	print_field(M, N);
+
+	DSU dsu(M * N);
+	random_combinations(&dsu, M, N);
 }

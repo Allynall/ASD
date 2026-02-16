@@ -7,7 +7,8 @@
 #include <conio.h>
 //#include <iomanip>
 //#include "../lib_sphere/sphere.h"
-#include "../lib_triangle_matrix/triangle_matrix.h"
+//#include "../lib_triangle_matrix/triangle_matrix.h"
+#include "../lib_algorithms/algorithms.cpp"
 //
 //enum Status { Coincidence, Touch, Intersecting, NotIntersecting };
 //
@@ -377,12 +378,13 @@ void matrix_type_menu() {
 
 
 int main() {
-	char choice = 10;
 	setlocale(LC_ALL, "Russian");
+	/*char choice = 10;
 	std::cout << std::endl;
 	while (choice != '3') {
 		matrix_type_menu();
 		choose_type_menu(&choice);
-	}
+	}*/
+	Maze();
 	return 0;
 }
