@@ -12,10 +12,11 @@ public:
 
     void insert(const TKey&, const TValue&) override; //++ 
     void erase(const TKey&) override; //++
-    //TValue& found(const TKey&) const noexcept override; // _row.find(Е) - по значению
+    TValue& found(const TKey&) const  override; // _row.find(Е) - по значению
 
     bool isEmpty() const noexcept override; //++
-    //operator <<
+
+    //Virtual friend iostream& operator << (iostream& out, const Table&);
     //operator >>
 };
 
@@ -45,10 +46,15 @@ void UnsortedTableM<TKey, TValue>::erase(const TKey& key) {
 }
 
 
-//template <class TKey, class TValue>
-//TValue& UnsortedTableM<TKey, TValue>::found(const TKey&) const noexcept {
-//    return 1;
-//}
+template <class TKey, class TValue>
+TValue& UnsortedTableM<TKey, TValue>::found(const TKey& key) const {
+    for (int i = 0; i < _rows.size(); i++) {
+        if (_rows[i].first == key) {
+            return _rows[i].second;
+        }
+    }
+    throw std::logic_error(" люч не найден");
+}
 
 template <class TKey, class TValue>
 bool UnsortedTableM<TKey, TValue>::isEmpty() const noexcept {

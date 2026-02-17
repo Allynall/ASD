@@ -8,7 +8,8 @@ public:
 
     virtual void insert(const TKey&, const TValue&) = 0;
     virtual void erase(const TKey&) = 0;
-    //virtual TValue& found(const TKey&) const noexcept = 0;
+    virtual TValue& found(const TKey&) const = 0;
     virtual bool isEmpty() const noexcept = 0;
+
     //virtual friend iostream& operator << (iostream& out, const Table&); //предположительно так, вывод крч
 };
