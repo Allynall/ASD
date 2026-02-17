@@ -17,6 +17,8 @@ add_subdirectory(lib_easy_example)    # подключаем дополните�
 add_subdirectory(lib_tvector)
 add_subdirectory(lib_i_table)
 add_subdirectory(lib_unsorted_table)
+add_subdirectory(lib_unsorted_tablel)
+add_subdirectory(lib_sorted_tablem)
 add_subdirectory(lib_algorithms)
 add_subdirectory(lib_dsu)
 add_subdirectory(main)                # подключаем дополнительный CMakeLists.txt из подкаталога с именем main
