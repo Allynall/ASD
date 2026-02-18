@@ -55,3 +55,36 @@ TEST(TestUnsortedTableLib, empty_pair_true_after_erase) {
 	table.erase(6);
 	EXPECT_TRUE(table.isEmpty());
 }
+
+TEST(TestUnsortedTableLib, found_pair) {
+	UnsortedTableM<int, std::string> table;
+	table.insert(5, "h");
+	table.insert(6, "a");
+	table.insert(7, "s");
+	EXPECT_EQ("h", table.found(5));
+	EXPECT_EQ("a", table.found(6));
+	EXPECT_EQ("s", table.found(7));
+}
+
+TEST(TestUnsortedTableLib, found_pair_after_erase) {
+	UnsortedTableM<int, std::string> table;
+	table.insert(5, "hfgf");
+	table.insert(6, "a");
+	table.insert(7, "s");
+	table.erase(7);
+	table.print();
+	EXPECT_EQ("h", table.found(5));
+	EXPECT_EQ("a", table.found(6));
+	EXPECT_ANY_THROW(table.found(7));
+}
+
+TEST(TestUnsortedTableLib, found_pair_throw) {
+	UnsortedTableM<int, std::string> table;
+	table.insert(5, "h");
+	EXPECT_ANY_THROW(table.found(7));
+}
+
+TEST(TestUnsortedTableLib, found_pair_in_empty_table) {
+	UnsortedTableM<int, std::string> table;
+	EXPECT_ANY_THROW(table.found(3));
+}
