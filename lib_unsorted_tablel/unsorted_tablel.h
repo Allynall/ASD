@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <iomanip>
 #include "../lib_tvector/tvector.h"
 #include "../lib_i_table/i_table.h"
 #include "../lib_list/list.h"
@@ -16,9 +17,8 @@ public:
     const TValue& found(const TKey&) const  override; //
 
     bool isEmpty() const noexcept override; //++
+    void print() const noexcept override;
 
-    //Virtual friend iostream& operator << (iostream& out, const Table&);
-    //operator >>
 };
 
 template <class TKey, class TValue>
@@ -62,4 +62,18 @@ bool UnsortedTableL<TKey, TValue>::isEmpty() const noexcept {
         return true;
     }
     return false;
+}
+
+template <class TKey, class TValue>
+void UnsortedTableL<TKey, TValue>::print() const noexcept {
+    std::cout << "\033[1m";
+    std::cout << "| " << std::left << std::setw(10) << "Key"
+        << " | " << std::setw(10) << "Value" << " |" << std::endl;
+    std::cout << "\033[0m";
+    for (List<std::pair<TKey, TValue>>::Iterator it = _rows.begin(); it != _rows.end(); ++it) {
+        std::cout << "---------------------------" << std::endl;
+        std::cout << "| " << std::left << std::setw(10) << (*it).first
+            << " | " << std::setw(10) << (*it).second << " |" << std::endl;
+    }
+    std::cout << "---------------------------" << std::endl;
 }

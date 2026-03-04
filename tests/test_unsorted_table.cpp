@@ -2,9 +2,6 @@
 #include <iostream>
 #include "../lib_unsorted_table/unsorted_table.h"
 
-TEST(TestUnsortedTableLib, can_default_construct) {
-	UnsortedTableM<int, std::string> table;
-}
 TEST(TestUnsortedTableLib, can_insert_pair) {
 	UnsortedTableM<int, std::string> table;
 	std::pair<int, std::string> expected_result = std::make_pair(5, "0");
@@ -68,7 +65,7 @@ TEST(TestUnsortedTableLib, found_pair) {
 
 TEST(TestUnsortedTableLib, found_pair_after_erase) {
 	UnsortedTableM<int, std::string> table;
-	table.insert(5, "hfgf");
+	table.insert(5, "h");
 	table.insert(6, "a");
 	table.insert(7, "s");
 	table.erase(7);

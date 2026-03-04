@@ -75,6 +75,8 @@ TEST(TestUnsortedTableLibL, found_pair_after_erase) {
 	EXPECT_EQ("h", table.found(5));
 	EXPECT_EQ("a", table.found(6));
 	EXPECT_ANY_THROW(table.found(7));
+
+	table.print();
 }
 
 TEST(TestUnsortedTableLibL, found_pair_throw) {

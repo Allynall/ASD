@@ -11,5 +11,5 @@ public:
     virtual const TValue& found(const TKey&) const = 0;
     virtual bool isEmpty() const noexcept = 0;
 
-    //virtual friend iostream& operator << (iostream& out, const Table&); //предположительно так, вывод крч
+    virtual void print() const noexcept = 0;
 };

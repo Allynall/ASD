@@ -1,6 +1,5 @@
 #pragma once
 #include <iostream>
-#include <stdio.h>
 #include <iomanip>
 #include "../lib_tvector/tvector.h"
 #include "../lib_i_table/i_table.h"
@@ -18,9 +17,7 @@ public:
 
     bool isEmpty() const noexcept override; //++
 
-    void print();
-    //Virtual friend iostream& operator << (iostream& out, const Table&);
-    //operator >>
+    void print() const noexcept override;
 };
 
 template <class TKey, class TValue>
@@ -68,7 +65,7 @@ bool UnsortedTableM<TKey, TValue>::isEmpty() const noexcept {
 }
 
 template <class TKey, class TValue>
-void UnsortedTableM<TKey, TValue>::print() {
+void UnsortedTableM<TKey, TValue>::print() const noexcept {
     std::cout << "\033[1m";
     std::cout << "| " << std::left << std::setw(10) << "Key"
         << " | " << std::setw(10) << "Value" << " |" << std::endl;

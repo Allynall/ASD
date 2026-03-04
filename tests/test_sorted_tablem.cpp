@@ -63,13 +63,15 @@ TEST(TestSortedTableLibM, found_pair) {
 
 TEST(TestSortedTableLibM, found_pair_after_erase) {
 	SortedTableM<int, std::string> table;
-	table.insert(5, "h");
 	table.insert(6, "a");
+	table.insert(5, "h");
 	table.insert(7, "s");
 	table.erase(7);
 	EXPECT_EQ("h", table.found(5));
 	EXPECT_EQ("a", table.found(6));
 	EXPECT_ANY_THROW(table.found(7));
+
+	table.print();
 }
 
 TEST(TestSortedTableLibM, found_pair_throw) {
