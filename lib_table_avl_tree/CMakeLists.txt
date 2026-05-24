@@ -1,0 +1,2 @@
+create_project_lib(TableAVLTree)
+add_depend(TableAVLTree ITable lib_i_table)

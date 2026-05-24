@@ -1,0 +1,2 @@
+create_project_lib(TableBSTree)
+add_depend(TableBSTree ITable lib_i_table)

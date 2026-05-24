@@ -1,4 +1,5 @@
 #pragma once
+#include <stdexcept>
 #include "../lib_node/node.h"
 
 template <class T>
@@ -9,6 +10,7 @@ public:
 	List(); //++
 	List(const List<T>&); //++
 	~List(); //++
+	List<T>& operator=(const List<T>& other);
 
 	bool is_empty() const; //++
 	void clear(); //++
@@ -220,9 +222,12 @@ void List<T>::pop_front() {
 		delete _head;
 		_head = nullptr;
 		_tail = nullptr;
+		_count--;
 		return;
 	}
+	Node<T>* temp = _head;  
 	_head = _head->next;
+	delete temp;  
 	_count--;
 };
 
@@ -235,6 +240,7 @@ void List<T>::pop_back() {
 		delete _head;
 		_head = nullptr;
 		_tail = nullptr;
+		_count--;
 		return;
 	}
 	Node <T>* cur = _head;
@@ -257,26 +263,32 @@ void List<T>::erase(Node <T>* node) {
 		delete _head;
 		_head = nullptr;
 		_tail = nullptr;
+		_count--;
 		return;
 	}
 	if (node == _head) {
 		pop_front();
 		return;
 	}
+
 	Node <T>* cur = _head;
 	while (cur->next != node && cur->next != nullptr) {
 		cur = cur->next;
 	}
 
+	if (cur->next == nullptr) {
+		throw std::invalid_argument("Position is wrong");
+	}
+
 	cur->next = node->next;
 
-	if (cur == nullptr) {
-		throw std::invalid_argument("Position is wrong");
+	if (node == _tail) {
+		_tail = cur;
 	}
 
 	node->next = nullptr;
 	delete node;
-	_count -= 1;
+	_count--;
 };
 
 template <class T>
@@ -304,3 +316,18 @@ void List<T>::erase(size_t pos) {
 
 	erase(cur);
 };
+
+template <class T>
+List<T>& List<T>::operator=(const List<T>& other) {
+	if (this != &other) {
+		clear(); 
+
+		Node<T>* cur = other._head;
+		while (cur != nullptr) {
+			push_back(cur->value);  
+			cur = cur->next;
+		}
+	}
+	return *this;
+}
+

@@ -52,8 +52,10 @@ Matrix<T>::Matrix(size_t M, size_t N) : MVector<MVector<T>>(M), _M(M), _N(N) {
 	}
 	for (size_t i = 0; i < _M; i++) {
 		_data[i] = MVector<T>(_N);
+		for (size_t j = 0; j < _N; j++) {
+			_data[i][j] = T();
+		}
 	}
-
 }
 
 template<typename T>

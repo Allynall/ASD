@@ -19,41 +19,58 @@ public:
     bool isEmpty() const noexcept override; //++
     void print() const noexcept override;
 
+private:
+   typename List<std::pair<TKey, TValue>>::Iterator key_search(const TKey& key, bool& found) const noexcept;
+
 };
+
+template <class TKey, class TValue>
+typename List<std::pair<TKey, TValue>>::Iterator UnsortedTableL<TKey, TValue>::key_search(const TKey& key, bool& found) const noexcept {
+    for (List<std::pair<TKey, TValue>>::Iterator it = _rows.begin(); it != _rows.end(); ++it) {
+        if ((*it).first == key) {
+            found = true;
+            return it;
+        }
+    }
+    found = false;
+    return _rows.head();
+}
+
 
 template <class TKey, class TValue>
 UnsortedTableL<TKey, TValue>::UnsortedTableL() : _rows() {}
 
 template <class TKey, class TValue>
 void UnsortedTableL<TKey, TValue>::insert(const TKey& key, const TValue& value) {
-    for (List<std::pair<TKey, TValue>>::Iterator it = _rows.begin(); it != _rows.end(); ++it) {
-        if ((*it).first == key) {
-            throw std::logic_error("The key is busy");
-        }
+    bool found = false;
+    List<std::pair<TKey, TValue>>::Iterator pos = key_search(key, found);
+    if (found) {
+        throw std::logic_error("The key is busy");
     }
     std::pair<TKey, TValue> pair1 = std::make_pair(key, value);
     _rows.push_back(pair1);
 }
 template <class TKey, class TValue>
 void UnsortedTableL<TKey, TValue>::erase(const TKey& key) {
-    for (List<std::pair<TKey, TValue>>::Iterator it = _rows.begin(); it != _rows.end(); ++it) {
-        if ((*it).first == key) {
-            _rows.erase(it.getNode());
-            return;
-        }
+    bool found = false;
+    List<std::pair<TKey, TValue>>::Iterator pos = key_search(key, found);
+
+    if (!found) {
+        throw std::logic_error("The key was not found");
     }
-    throw std::logic_error("The key was not found");
+    _rows.erase(pos.getNode());
 }
 
 
 template <class TKey, class TValue>
 const TValue& UnsortedTableL<TKey, TValue>::found(const TKey& key) const {
-    for (List<std::pair<TKey, TValue>>::Iterator it = _rows.begin(); it != _rows.end(); ++it) {
-        if ((*it).first == key) {
-            return (*it).second;
-        }
+    bool found = false;
+    List<std::pair<TKey, TValue>>::Iterator pos = key_search(key, found);
+
+    if (!found) {
+        throw std::logic_error("The key was not found");
     }
-    throw std::logic_error("The key was not found");
+    return (*pos).second;
 }
 
 template <class TKey, class TValue>
